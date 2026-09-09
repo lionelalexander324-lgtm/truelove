@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#8c0618" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>True Love Arrives | mimoon</title>
+
+  <link rel="preload" as="image" href="assets/banner-20260909.webp?v=20260909-02" fetchpriority="high" />
+
+  <style>
+    :root{
+      --wine:#850414;
+      --deep:#58000d;
+      --red:#b80b24;
+      --rose:#e6354f;
+      --pink:#fff0ef;
+      --cream:#fff8ec;
+      --gold:#f4ca70;
+      --gold2:#fff0b5;
+      --ink:#5d1722;
+      --shadow:0 14px 34px rgba(92,0,14,.16);
+      --radius:22px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:#fff6f2}
+    body{
+      margin:0;
+      min-height:100vh;
+      overflow-x:hidden;
+      color:var(--ink);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      background:
+        radial-gradient(circle at 8% 5%,rgba(255,213,196,.82),transparent 25%),
+        radial-gradient(circle at 92% 18%,rgba(255,205,215,.78),transparent 28%),
+        linear-gradient(180deg,#fff7f0 0%,#fff5f2 38%,#fff9f6 100%);
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    img{display:block;max-width:100%;height:auto}
+    a{-webkit-tap-highlight-color:transparent}
+
+    .page{
+      width:min(100%,620px);
+      margin:0 auto;
+      min-height:100vh;
+      position:relative;
+      overflow:hidden;
+      background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,246,242,.42));
+      box-shadow:0 0 55px rgba(117,0,20,.08);
+    }
+
+    /* Opening love letter */
+    .intro{
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 50% 34%,rgba(255,192,185,.34),transparent 26%),
+        linear-gradient(145deg,#6c0010 0%,#a70d25 50%,#5f0010 100%);
+      transition:opacity .65s ease,visibility .65s ease;
+    }
+    .intro.is-done{opacity:0;visibility:hidden;pointer-events:none}
+    .intro::before,.intro::after{
+      content:"";
+      position:absolute;
+      width:260px;height:260px;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(255,229,166,.17),transparent 68%);
+      filter:blur(2px);
+    }
+    .intro::before{top:-70px;left:-80px}
+    .intro::after{right:-80px;bottom:-100px}
+    .intro-copy{
+      position:absolute;
+      top:max(9vh,50px);
+      width:100%;
+      padding:0 24px;
+      color:#fff3d3;
+      text-align:center;
+      font-family:Georgia,"Times New Roman",serif;
+      font-style:italic;
+      font-size:16px;
+      letter-spacing:.4px;
+      opacity:0;
+      animation:introText .7s ease .55s forwards;
+    }
+    .envelope-scene{
+      width:min(82vw,350px);
+      height:310px;
+      position:relative;
+      perspective:900px;
+      transform:translateY(16px);
+    }
+    .envelope{
+      position:absolute;
+      left:50%;bottom:35px;
+      width:280px;height:178px;
+      transform:translateX(-50%);
+      filter:drop-shadow(0 20px 20px rgba(30,0,4,.28));
+    }
+    .env-back{
+      position:absolute;inset:0;
+      border:1px solid rgba(255,233,175,.9);
+      border-radius:8px 8px 15px 15px;
+      background:linear-gradient(145deg,#a90b22,#7d0014);
+      overflow:hidden;
+    }
+    .env-back::after{
+      content:"";
+      position:absolute;left:0;right:0;bottom:-1px;height:112px;
+      background:linear-gradient(160deg,transparent 49.2%,rgba(255,190,104,.25) 50%,transparent 51%),
+                 linear-gradient(200deg,transparent 49.2%,rgba(255,190,104,.25) 50%,transparent 51%);
+    }
+    .letter{
+      position:absolute;
+      z-index:2;
+      left:50%;bottom:20px;
+      width:236px;height:154px;
+      transform:translateX(-50%) translateY(20px);
+      border:1px solid #f1d28e;
+      border-radius:8px;
+      background:linear-gradient(180deg,#fffdf4,#fff1da);
+      color:#8d1830;
+      text-align:center;
+      padding:25px 15px 14px;
+      box-shadow:0 8px 24px rgba(86,0,14,.18);
+      animation:letterRise 1s cubic-bezier(.22,.76,.28,1) .75s forwards;
+    }
+    .letter b{
+      display:block;
+      font-family:Georgia,"Times New Roman",serif;
+      font-size:23px;
+      line-height:1.12;
+      margin-bottom:9px;
+      color:#8b071b;
+    }
+    .letter span{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:13px;color:#9b5961}
+    .letter-heart{font-size:30px;line-height:1;margin-top:10px;filter:drop-shadow(0 3px 3px rgba(173,0,23,.18))}
+    .flap{
+      position:absolute;
+      z-index:4;
+      left:0;top:0;
+      width:0;height:0;
+      border-left:140px solid transparent;
+      border-right:140px solid transparent;
+      border-top:96px solid #ba0d25;
+      transform-origin:50% 0;
+      filter:drop-shadow(0 2px 0 rgba(255,216,139,.45));
+      animation:flapOpen .9s cubic-bezier(.45,.05,.25,1) .3s forwards;
+      backface-visibility:hidden;
+    }
+    .env-front{
+      position:absolute;z-index:3;inset:0;
+      border-radius:0 0 15px 15px;
+      overflow:hidden;
+      pointer-events:none;
+    }
+    .env-front::before,.env-front::after{content:"";position:absolute;bottom:0;width:0;height:0}
+    .env-front::before{left:0;border-left:140px solid #99061c;border-top:88px solid transparent;border-bottom:88px solid #99061c}
+    .env-front::after{right:0;border-right:140px solid #8b0519;border-top:88px solid transparent;border-bottom:88px solid #8b0519}
+    .seal{
+      position:absolute;z-index:6;
+      left:50%;top:74px;
+      width:48px;height:48px;
+      transform:translateX(-50%);
+      border:2px solid #ffe0a0;
+      border-radius:50%;
+      display:grid;place-items:center;
+      color:#fff4c6;
+      font-size:23px;
+      background:radial-gradient(circle at 35% 30%,#e54258,#9f061c 64%);
+      box-shadow:0 3px 10px rgba(82,0,9,.28), inset 0 0 0 3px rgba(255,255,255,.08);
+      animation:sealFade .35s ease .28s forwards;
+    }
+    .spark{
+      position:absolute;
+      color:#ffe6a3;
+      font-size:16px;
+      opacity:0;
+      animation:twinkle 1.7s ease-in-out infinite;
+    }
+    .spark.s1{left:10%;top:20%;animation-delay:.2s}.spark.s2{right:11%;top:28%;animation-delay:.7s}.spark.s3{left:21%;bottom:18%;animation-delay:1s}.spark.s4{right:19%;bottom:23%;animation-delay:.45s}
+
+    @keyframes flapOpen{0%{transform:rotateX(0)}55%,100%{transform:rotateX(178deg);z-index:1}}
+    @keyframes sealFade{to{opacity:0;transform:translateX(-50%) scale(.65)}}
+    @keyframes letterRise{0%{transform:translateX(-50%) translateY(20px)}100%{transform:translateX(-50%) translateY(-92px)}}
+    @keyframes introText{to{opacity:1}}
+    @keyframes twinkle{0%,100%{opacity:.2;transform:scale(.7) rotate(0)}50%{opacity:1;transform:scale(1.1) rotate(20deg)}}
+
+    /* Banner */
+    .hero{position:relative;background:#740011;overflow:hidden}
+    .hero img{width:100%;aspect-ratio:2048/694;object-fit:contain;background:#780312}
+    .hero::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:22px;background:linear-gradient(180deg,transparent,#fff7f0)}
+
+    .event-time-wrap{padding:14px 18px 6px;text-align:center}
+    .event-time{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:42px;
+      padding:9px 20px;
+      border:1px solid rgba(201,132,42,.45);
+      border-radius:999px;
+      color:#7c1421;
+      font-weight:700;
+      font-size:14px;
+      letter-spacing:.1px;
+      background:linear-gradient(135deg,#fff9e7,#ffe6d9 55%,#fff7df);
+      box-shadow:0 8px 22px rgba(135,17,31,.10),inset 0 0 0 1px rgba(255,255,255,.7);
+    }
+    .event-time::before{content:"✦";margin-right:8px;color:#c48c2f;font-size:12px}
+    .event-time::after{content:"✦";margin-left:8px;color:#c48c2f;font-size:12px}
+
+    main{padding:8px 16px 4px}
+    .card{
+      position:relative;
+      margin:14px 0;
+      padding:20px 17px;
+      border:1px solid rgba(216,147,88,.26);
+      border-radius:var(--radius);
+      background:linear-gradient(145deg,rgba(255,255,255,.93),rgba(255,245,238,.93));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      content-visibility:auto;
+      contain-intrinsic-size:420px;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      width:120px;height:120px;
+      top:-70px;right:-48px;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(227,53,79,.12),transparent 67%);
+    }
+    .section-kicker{
+      display:flex;align-items:center;gap:9px;
+      margin:0 0 12px;
+      font-size:20px;
+      line-height:1.2;
+      color:#840c1d;
+      font-family:Georgia,"Times New Roman",serif;
+      font-weight:700;
+    }
+    .section-kicker .mini-heart{font-family:inherit;color:#cf263e}
+    p{margin:0;color:#642834;font-size:15px;line-height:1.68}
+    p + p{margin-top:8px}
+    strong{color:#8c0a20}
+
+    .seat-preview{
+      width:min(74%,270px);
+      margin:18px auto 2px;
+      padding:9px;
+      border-radius:24px;
+      background:linear-gradient(145deg,#fffdf9,#ffece8);
+      border:1px solid rgba(202,140,58,.35);
+      box-shadow:0 12px 28px rgba(116,4,21,.13);
+    }
+    .seat-preview img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:17px;background:#fae9e6}
+    .seat-label{text-align:center;margin:9px 0 2px;font-size:12px;color:#9d5962;font-weight:700;letter-spacing:.25px}
+
+    .reward-intro{margin-bottom:14px}
+    .reward-list{display:grid;gap:11px}
+    .reward-item{
+      display:grid;
+      grid-template-columns:108px minmax(0,1fr);
+      align-items:center;
+      gap:14px;
+      padding:9px 10px;
+      border-radius:18px;
+      border:1px solid rgba(205,135,57,.27);
+      background:linear-gradient(120deg,#fffaf3,#fff1ed);
+      box-shadow:0 7px 18px rgba(117,8,26,.07);
+    }
+    .reward-item img{
+      width:108px;height:108px;
+      object-fit:cover;
+      border-radius:14px;
+      background:#fff0e8;
+      box-shadow:0 5px 14px rgba(125,5,20,.11);
+    }
+    .reward-name{font-size:14.5px;line-height:1.42;font-weight:800;color:#7d1020}
+    .reward-note{margin-top:5px;font-size:12px;line-height:1.45;color:#a36b72}
+
+    /* Bottom note deliberately not styled as a third numbered/section card */
+    .bottom-note{
+      margin:20px 16px 0;
+      padding:22px 18px 18px;
+      text-align:center;
+      position:relative;
+      border-top:1px solid rgba(192,116,40,.28);
+    }
+    .bottom-note::before{content:"❤";position:absolute;top:-11px;left:50%;transform:translateX(-50%);padding:0 10px;background:#fff7f3;color:#c91d39;font-size:20px}
+    .bottom-note .join{font-size:16px;line-height:1.5;color:#800f20;font-weight:800}
+    .bottom-note .secret{margin-top:10px;font-family:Georgia,"Times New Roman",serif;font-size:15px;line-height:1.55;color:#78313d}
+
+    .wa-btn{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      min-height:52px;
+      margin:17px auto 0;
+      padding:12px 17px;
+      border:1px solid rgba(248,211,125,.8);
+      border-radius:999px;
+      text-decoration:none;
+      color:#fff;
+      font-weight:800;
+      font-size:14px;
+      letter-spacing:.05px;
+      background:linear-gradient(135deg,#861022,#bd1b38 55%,#8d0a20);
+      box-shadow:0 12px 26px rgba(136,5,28,.22),inset 0 1px 0 rgba(255,255,255,.18);
+      position:relative;
+      overflow:hidden;
+      transform:translateZ(0);
+    }
+    .wa-btn::before{
+      content:"";
+      position:absolute;
+      inset:-2px auto -2px -50%;
+      width:34%;
+      transform:skewX(-18deg);
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.38),transparent);
+      animation:shine 3s ease-in-out infinite;
+    }
+    .wa-icon{margin-right:8px;font-size:17px}
+    @keyframes shine{0%,55%{left:-50%}80%,100%{left:120%}}
+
+    footer{padding:8px 18px calc(24px + env(safe-area-inset-bottom));text-align:center;font-size:11px;color:#b17a80;letter-spacing:.35px}
+
+    /* Lightweight rose petals: only opacity + transform are animated */
+    .petals{position:fixed;inset:0;pointer-events:none;z-index:20;overflow:hidden}
+    .petal{
+      position:absolute;
+      top:-9vh;
+      width:10px;height:16px;
+      border-radius:70% 25% 70% 25%;
+      background:linear-gradient(145deg,#ec526a,#a90723 72%);
+      box-shadow:0 1px 2px rgba(86,0,15,.15);
+      opacity:.65;
+      will-change:transform;
+      animation:petalFall var(--d) linear var(--delay) infinite;
+      left:var(--x);
+      transform:translate3d(0,-10vh,0) rotate(var(--r));
+    }
+    @keyframes petalFall{
+      0%{transform:translate3d(0,-12vh,0) rotate(var(--r));opacity:0}
+      8%{opacity:.7}
+      50%{transform:translate3d(var(--drift),52vh,0) rotate(calc(var(--r) + 210deg))}
+      100%{transform:translate3d(calc(var(--drift) * -.5),112vh,0) rotate(calc(var(--r) + 520deg));opacity:.12}
+    }
+
+    @media (min-width:520px){
+      main{padding-left:22px;padding-right:22px}
+      .card{padding:23px 22px}
+      .reward-item{grid-template-columns:126px 1fr;padding:10px 12px}.reward-item img{width:126px;height:126px}
+      .bottom-note{margin-left:22px;margin-right:22px}
+    }
+
+    @media (max-width:360px){
+      main{padding-left:12px;padding-right:12px}
+      .card{padding:18px 14px;border-radius:20px}
+      .event-time-wrap{padding-left:12px;padding-right:12px}
+      .event-time{padding-left:14px;padding-right:14px;font-size:13px}
+      .reward-item{grid-template-columns:94px 1fr;gap:11px}.reward-item img{width:94px;height:94px}.reward-name{font-size:13.5px}
+      .section-kicker{font-size:19px}
+      p{font-size:14px}
+      .bottom-note{margin-left:12px;margin-right:12px;padding-left:10px;padding-right:10px}
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}
+      .petals{display:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro-copy">Some feelings are easier to send than to say…</div>
+    <div class="envelope-scene">
+      <span class="spark s1">✦</span><span class="spark s2">✧</span><span class="spark s3">✦</span><span class="spark s4">✧</span>
+      <div class="envelope">
+        <div class="env-back"></div>
+        <div class="letter">
+          <b>A little confession…</b>
+          <span>for someone special</span>
+          <div class="letter-heart">💌</div>
+        </div>
+        <div class="flap"></div>
+        <div class="env-front"></div>
+        <div class="seal">♥</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="petals" aria-hidden="true">
+    <i class="petal" style="--x:6%;--d:11s;--delay:-2s;--drift:30px;--r:14deg"></i>
+    <i class="petal" style="--x:15%;--d:13s;--delay:-8s;--drift:-22px;--r:70deg"></i>
+    <i class="petal" style="--x:27%;--d:10s;--delay:-5s;--drift:42px;--r:30deg"></i>
+    <i class="petal" style="--x:39%;--d:14s;--delay:-11s;--drift:-35px;--r:90deg"></i>
+    <i class="petal" style="--x:53%;--d:12s;--delay:-7s;--drift:24px;--r:45deg"></i>
+    <i class="petal" style="--x:66%;--d:15s;--delay:-4s;--drift:-28px;--r:130deg"></i>
+    <i class="petal" style="--x:77%;--d:11s;--delay:-9s;--drift:38px;--r:18deg"></i>
+    <i class="petal" style="--x:88%;--d:13s;--delay:-6s;--drift:-31px;--r:82deg"></i>
+    <i class="petal" style="--x:95%;--d:16s;--delay:-12s;--drift:18px;--r:44deg"></i>
+  </div>
+
+  <div class="page">
+    <header class="hero">
+      <img src="assets/banner-20260909.webp?v=20260909-02" width="1800" height="610" alt="True Love Arrives — Is it just a gift or a little confession?" fetchpriority="high" decoding="async" />
+    </header>
+
+    <div class="event-time-wrap">
+      <div class="event-time">Event Time: Sep 10th–Sep 13th</div>
+    </div>
+
+    <main>
+      <section class="card" aria-labelledby="unlock-title">
+        <h2 class="section-kicker" id="unlock-title"><span class="mini-heart">💘</span> Send a Little Hint</h2>
+        <p><strong>Reach Lv.3 in the Lucky Gift task within the past 4 days to unlock the exclusive True Love Seat Frame.</strong></p>
+        <p>Send it to <strong>anyone</strong> who feels a little special to you. 💘</p>
+
+        <div class="seat-preview">
+          <img src="assets/seat-frame-demo-20260909.gif?v=20260909-02" width="240" height="240" alt="True Love Seat Frame preview" loading="lazy" decoding="async" />
+          <div class="seat-label">TRUE LOVE SEAT FRAME</div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="extra-title">
+        <h2 class="section-kicker" id="extra-title"><span class="mini-heart">✨</span> Extra Couple Rewards</h2>
+        <p class="reward-intro">You can also unlock extra couple rewards, including:</p>
+
+        <div class="reward-list">
+          <article class="reward-item">
+            <img src="assets/reward-poster-20260909.webp?v=20260909-02" width="720" height="720" alt="Exclusive Couple Promo Poster" loading="lazy" decoding="async" />
+            <div>
+              <div class="reward-name">Exclusive Couple Promo Poster</div>
+              <div class="reward-note">A special poster made for the two of you.</div>
+            </div>
+          </article>
+
+          <article class="reward-item">
+            <img src="assets/reward-letter-20260909.webp?v=20260909-02" width="720" height="720" alt="Your Love Story Letter" loading="lazy" decoding="async" />
+            <div>
+              <div class="reward-name">Your Love Story Letter</div>
+              <div class="reward-note">Turn your story into a little keepsake.</div>
+            </div>
+          </article>
+
+          <article class="reward-item">
+            <img src="assets/reward-video-20260909.webp?v=20260909-02" width="720" height="720" alt="Exclusive Couple Promo Video" loading="lazy" decoding="async" />
+            <div>
+              <div class="reward-name">Exclusive Couple Promo Video</div>
+              <div class="reward-note">A romantic video made just for your moment.</div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <div class="bottom-note">
+      <div class="join">No registration needed — just join and participate!</div>
+      <div class="secret">Too shy to say it yourself?<br />Tell <strong>mimoon</strong> — we’ll deliver your secret message for you. 💌</div>
+      <a class="wa-btn" href="https://wa.me/8618646390081" target="_blank" rel="noopener noreferrer" aria-label="Questions? Contact us on WhatsApp at +86 186 4639 0081">
+        <span class="wa-icon">💬</span> Questions? WhatsApp: +86 186 4639 0081
+      </a>
+    </div>
+
+    <footer>mimoon · True Love Arrives</footer>
+  </div>
+
+  <script>
+    (() => {
+      const intro = document.getElementById('intro');
+      if (!intro) return;
+      const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const wait = reduced ? 650 : 2850;
+      window.setTimeout(() => intro.classList.add('is-done'), wait);
+      window.setTimeout(() => intro.remove(), wait + 800);
+    })();
+  </script>
+</body>
+</html>
